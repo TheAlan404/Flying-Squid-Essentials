@@ -1,4 +1,5 @@
 var prefix = "[Essentials] ";
+var freezed = [];
 console.log(prefix + "Plugin enabled");
 module.exports.player = (player, serv) => {
     player.commands.add(
@@ -88,9 +89,25 @@ module.exports.player = (player, serv) => {
                     }
                 }
                 serv.getPlayer(args[0]).chat(msg);
-            }}
+            }
+        }
     }
-    
-    
     );
+    player.commands.add(
+        {
+            base: 'freeze',
+            aliases: ['freeze'],
+            info: 'Freeze a player.',
+            usage: '/freeze <player>',
+            op: true,
+            action(args) {
+                if(!serv.getPlayer(args[0])) return player.chat(prefix + "Player not found.");
+                freezed.push(serv.getPlayer(args[0]).username);
+            }
+        }
+    );
+    player.on('move_cancel', ({position}, cancel) => {
+        if(!freezed.includes(player.username)) return;
+        cancel(); //FBI, dont move!
+    });
 };
