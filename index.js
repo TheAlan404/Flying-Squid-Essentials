@@ -72,7 +72,7 @@ module.exports.player = (player, serv) => {
         base: 'msg',
         aliases: ['m'],
         info: 'Message a player',
-        usage: '/teleport [target player] <destination player or x> [y] [z]',
+        usage: '/msg <player> <message>',
         op: true,
         parse(str) {
             return str.match(/^(((.* )?~?-?\d* ~?-?\d* ~?-?\d*)|(.+ .+))$/) ? str.split(' ') : false;
